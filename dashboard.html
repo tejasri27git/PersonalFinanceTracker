@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <h1>Dashboard</h1>
+
+    <h2>Total Income: {{ total_income }}</h2>
+    <h2>Total Expense: {{ total_expense }}</h2>
+    <h2>Balance: {{ balance }}</h2>
+
+    <h3>Income List:</h3>
+    <ul>
+        {% for item in incomes %}
+            <li>{{ item.source }}: {{ item.amount }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Expense List:</h3>
+    <ul>
+        {% for item in expenses %}
+            <li>{{ item.name }}: {{ item.amount }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Step 2: Chart Canvas -->
+    <h2>Income vs Expense Chart</h2>
+    <canvas id="financeChart" width="400" height="200"></canvas>
+
+    <!-- Step 3: Chart.js Script -->
+    <script>
+        // Get values from Flask variables
+        const totalIncome = {{ total_income }};
+        const totalExpense = {{ total_expense }};
+
+        const ctx = document.getElementById('financeChart').getContext('2d');
+        const financeChart = new Chart(ctx, {
+            type: 'bar', // Change to 'pie' or 'doughnut' if you want
+            data: {
+                labels: ['Income', 'Expense'],
+                datasets: [{
+                    label: 'Amount',
+                    data: [totalIncome, totalExpense],
+                    backgroundColor: ['#28a745', '#dc3545'] // Green for income, Red for expense
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

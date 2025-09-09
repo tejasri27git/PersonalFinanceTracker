@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Income</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <h1>Add Income</h1>
+    <form method="POST">
+        <label>Source:</label><br>
+        <input type="text" name="source"><br><br>
+        <label>Amount:</label><br>
+        <input type="number" name="amount" step="0.01"><br><br>
+        <button type="submit">Add Income</button>
+    </form>
+</body>
+</html>
